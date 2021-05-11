@@ -1,0 +1,52 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+x=read.csv('./data/DailyDelhiClimateTrain.csv')
+tem=ts(x$meantemp)
+```
+
+```{r}
+plot(tem)
+```
+
+```{r}
+library(xts)
+tem=xts(x$meantemp,as.Date(x$date))
+plot(tem)
+```
+
+```{r}
+acf(tem)
+```
+
+```{r}
+tem=to.weekly(tem)
+plot(tem$tem.High)
+```
+```{r}
+acf(tem$tem.High)
+```
+```{r}
+pacf(tem$tem.High)
+```
+
+```{r}
+plot(x$humidity)
+```
+
+```{r}
+hum=xts(x$humidity,as.Date(x$date))
+plot(hum)
+```
+```{r}
+acf(hum)
+pacf(hum)
+```
+
