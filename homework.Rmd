@@ -26,27 +26,74 @@ plot(tem)
 acf(tem)
 ```
 
+
+
+
+
+
+
 ```{r}
-tem=to.weekly(tem)
-plot(tem$tem.High)
+library(fUnitRoots)
+library(forecast)
 ```
+
+
 ```{r}
-acf(tem$tem.High)
-```
-```{r}
-pacf(tem$tem.High)
+diff_tem=diff(tem)[-1]
+plot(diff_tem)
+adfTest(diff_tem)
+acf(diff_tem)
+pacf(diff_tem)
 ```
 
 ```{r}
-plot(x$humidity)
+x=diff(diff_tem,365)[-1:-365]
+head(x)
+plot(x)
+adfTest(x)
+acf(x)
+pacf(x)
 ```
 
 ```{r}
-hum=xts(x$humidity,as.Date(x$date))
-plot(hum)
+ans=auto.arima(x)
+auto.arima(x)
+```
+$x_t=ma1*a_{t-1}+ma2*a_{t-2}$
+```{r}
+plot(ans$fitted)
 ```
 ```{r}
-acf(hum)
-pacf(hum)
+pred_x=forecast(ans,365)
+autoplot(forecast(ans,365))
+```
+
+```{r}
+library(zoo)
+library(xts)
+pred_tem=as.numeric(tem)
+n=length(tem)+1
+for (i in n:(n+365)) {
+  pred_tem=c(pred_tem,pred_x$mean[i-n+1]
+             +pred_tem[i-1]+pred_tem[i-365]
+             -pred_tem[i-366])
+}
+
+dates=seq(as.Date("2013-01-01"), length = length(pred_tem), by = "days")
+pred_tem=xts(pred_tem,dates)[n:(n+365)]
+plot(pred_tem)
+```
+
+
+
+
+```{r}
+test_data=read.csv("./data/DailyDelhiClimateTest.csv")
+real_tem=xts(test_data$meantemp,as.Date(test_data$date))
+plot(real_tem)
+```
+```{r}
+xx=merge(pred_tem,real_tem)
+plot(xx)
 ```
 
