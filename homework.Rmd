@@ -80,7 +80,7 @@ for (i in n:(n+365)) {
 }
 
 dates=seq(as.Date("2013-01-01"), length = length(pred_tem), by = "days")
-pred_tem=xts(pred_tem,dates)[n:(n+365)]
+pred_tem=xts(pred_tem,dates)[n:(n+120)]
 plot(pred_tem)
 ```
 
@@ -95,5 +95,6 @@ plot(real_tem)
 ```{r}
 xx=merge(pred_tem,real_tem)
 plot(xx)
+head(xx)
 ```
 
