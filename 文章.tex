@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{ctex}
+
+\usepackage{geometry}
+\geometry{a4paper,left=2cm,right=2cm,top=1cm,bottom=1cm}
+%页边距
+
+\usepackage{titlesec} %自定义多级标题格式的宏包
+\titleformat{\section}[block]{\LARGE\bfseries}{\arabic{section}}{1em}{}[]
+\titleformat{\subsection}[block]{\Large\itshape\mdseries}{\arabic{section}.\arabic{subsection}}{1em}{}[]
+\titleformat{\subsubsection}[block]{\normalsize\bfseries}{\arabic{subsection}-\alph{subsubsection}}{1em}{}[]
+\titleformat{\paragraph}[block]{\small\bfseries}{[\arabic{paragraph}]}{1em}{}[]
+
+\iffalse
+\titleformat{command}[shape]%定义标题类型和标题样式，字体
+{format}%定义标题格式:字号（大小），加粗，斜体
+{label}%定义标题的标签，即标题的标号等
+{sep}%定义标题和标号之间的水平距离
+{before-code}%定义标题前的内容
+[after-code]%定义标题后的内容
+\fi
+
+
+\title{时间序列分析课程论文}
+\date{2021年5月23日}
+\author{18377198 李俊然}
+ 
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\pagenumbering{arabic}
+\section{绪论}
+\subsection{问题描述}
+在现代，对于气象数据的预测对于某些商业活动非常重要
+\subsection{数据来源}
+数据来自于Kaggle，源自Weather Undergroud API。数据包含了2013年1月1日到2017年4月24日德里(Delhi)的每日平均气温、
+湿度、风速、气压数据，本模型利用了温度进行时间序列分析。
+\section{数据描述}
+这是第二章
+\section{模型构建}
+21
+\section{模型预测检验}
+21
+\end{document}
