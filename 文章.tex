@@ -2,7 +2,10 @@
 \usepackage{ctex}
 
 \usepackage{geometry}
-\geometry{a4paper,left=2cm,right=2cm,top=1cm,bottom=1cm}
+\newgeometry{
+    top=30mm, bottom=25mm, left=30mm, right=20mm,
+    headsep=5mm
+}
 %页边距
 
 \usepackage{titlesec} %自定义多级标题格式的宏包
@@ -20,14 +23,51 @@
 [after-code]%定义标题后的内容
 \fi
 
+\usepackage{graphicx} %插入图片的宏包
+\usepackage{float} %设置图片浮动位置的宏包
+\usepackage{subfigure} %插入多图时用子图显示的宏包
 
-\title{时间序列分析课程论文}
-\date{2021年5月23日}
-\author{18377198 李俊然}
- 
+
 \begin{document}
+\begin{titlepage}
+    % 第二个()里的参数表示左移35pt，下移55pt
+    \begin{picture}(0,0)(35,55)
+        \includegraphics[width=90pt]{figure/buaamark.eps}
+    \end{picture}
+    \hfill
+    
+    \vskip 95bp
+    \begin{center}
+        \includegraphics[width=360bp]{figure/buaaname.eps}
+        \vskip 45bp
+        \centerline{\zihao{-0}\heiti 时间序列分析课程论文}
+        ~~\\
+        \vspace*{\stretch{4}}
+        \begin{minipage}[h]{.8\textwidth}
+            \centering{\heiti\zihao{2}时间序列分析课程论文}
+        \end{minipage}
+        \vskip 20bp
+        \begin{minipage}[h]{.75\textwidth}
+            \centering{\heiti\zihao{3}时间序列分析课程论文}
+        \end{minipage}
+        \vspace*{\stretch{3}}
+        ~~\\
+        {
+            \zihao{-3}\heiti            
+            \begin{tabular}{cc}
+                学~~~院~~~名~~~称~~&\underline{~~~~学院~~~~}\\[.4ex]
+                专~~~业~~~名~~~称~~&\underline{~~~~专业~~~~}\\[.4ex]
+                学~~~生~~~姓~~~名~~&\underline{~~~李俊然~~~}\\[.4ex]
+                指~~~导~~~教~~~师~~&\underline{~~~123~~~~~}\\
+            \end{tabular}
+            
+        }
+        \vskip 60bp
+        \centerline{\heiti\zihao{-3}2021~~年~~5~~月~~23~~日}
+    \end{center}
+\end{titlepage}
+
 \pagenumbering{gobble}
-\maketitle
 \newpage
 \pagenumbering{arabic}
 \section{绪论}
