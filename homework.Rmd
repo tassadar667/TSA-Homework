@@ -69,18 +69,52 @@ autoplot(forecast(ans,365))
 ```
 
 ```{r}
+e=ans$x-ans$fitted
+plot(e)
+library(FinTS)
+library(fGarch)
+ArchTest(e,lags = 5)
+```
+```{r}
+ans_garch=garchFit(~arma(1, 2)+garch(5,0),data=x)
+summary(ans_garch)
+```
+```{r}
+pred_x=predict(ans_garch,114)
+```
+
+
+```{r}
 library(zoo)
 library(xts)
+
 pred_tem=as.numeric(tem)
 n=length(tem)+1
-for (i in n:(n+365)) {
-  pred_tem=c(pred_tem,pred_x$mean[i-n+1]
+for (i in n:(n+113)) {
+  pred_tem=c(pred_tem,pred_x$meanForecast[i-n+1]
              +pred_tem[i-1]+pred_tem[i-365]
              -pred_tem[i-366])
 }
+pred_tem_up=as.numeric(tem)
+
+for (i in n:(n+113)) {
+  pred_tem_up=c(pred_tem_up,pred_x$meanForecast[i-n+1]+3*pred_x$standardDeviation[i-n+1]
+                +pred_tem[i-1]+pred_tem[i-365]
+                -pred_tem[i-366])
+}
+pred_tem_low=as.numeric(tem)
+
+for (i in n:(n+113)) {
+  pred_tem_low=c(pred_tem_low,pred_x$meanForecast[i-n+1]-3*pred_x$standardDeviation[i-n+1]
+                 +pred_tem[i-1]+pred_tem[i-365]
+                 -pred_tem[i-366])
+}
 
 dates=seq(as.Date("2013-01-01"), length = length(pred_tem), by = "days")
-pred_tem=xts(pred_tem,dates)[n:(n+365)]
+
+pred_tem=xts(pred_tem,dates)[n:(n+113)]
+pred_tem_up=xts(pred_tem_up,dates)[n:(n+113)]
+pred_tem_low=xts(pred_tem_low,dates)[n:(n+113)]
 plot(pred_tem)
 ```
 
@@ -93,7 +127,7 @@ real_tem=xts(test_data$meantemp,as.Date(test_data$date))
 plot(real_tem)
 ```
 ```{r}
-xx=merge(pred_tem,real_tem)
+xx=merge(pred_tem,pred_tem_low,pred_tem_up,real_tem)
 plot(xx)
 ```
 
