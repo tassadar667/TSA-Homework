@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{ctex}
-
+\usepackage{booktabs}
 \usepackage{geometry}
 \newgeometry{
     top=30mm, bottom=25mm, left=30mm, right=20mm,
@@ -10,7 +10,7 @@
 
 \usepackage{titlesec} %自定义多级标题格式的宏包
 \titleformat{\section}[block]{\LARGE\bfseries}{\arabic{section}}{1em}{}[]
-\titleformat{\subsection}[block]{\Large\itshape\mdseries}{\arabic{section}.\arabic{subsection}}{1em}{}[]
+\titleformat{\subsection}[block]{\Large\bfseries}{\arabic{section}.\arabic{subsection}}{1em}{}[]
 \titleformat{\subsubsection}[block]{\normalsize\bfseries}{\arabic{subsection}-\alph{subsubsection}}{1em}{}[]
 \titleformat{\paragraph}[block]{\small\bfseries}{[\arabic{paragraph}]}{1em}{}[]
 
@@ -26,7 +26,7 @@
 \usepackage{graphicx} %插入图片的宏包
 \usepackage{float} %设置图片浮动位置的宏包
 \usepackage{subfigure} %插入多图时用子图显示的宏包
-
+\usepackage[hidelinks]{hyperref}
 
 \begin{document}
 \begin{titlepage}
@@ -35,7 +35,7 @@
         \includegraphics[width=90pt]{figure/buaamark.eps}
     \end{picture}
     \hfill
-    
+
     \vskip 95bp
     \begin{center}
         \includegraphics[width=360bp]{figure/buaaname.eps}
@@ -53,33 +53,74 @@
         \vspace*{\stretch{3}}
         ~~\\
         {
-            \zihao{-3}\heiti            
-            \begin{tabular}{cc}
-                学~~~院~~~名~~~称~~&\underline{~~~~学院~~~~}\\[.4ex]
-                专~~~业~~~名~~~称~~&\underline{~~~~专业~~~~}\\[.4ex]
-                学~~~生~~~姓~~~名~~&\underline{~~~李俊然~~~}\\[.4ex]
-                指~~~导~~~教~~~师~~&\underline{~~~123~~~~~}\\
-            \end{tabular}
-            
+        \zihao{-3}\heiti
+        \begin{tabular}{cc}
+            学~~~院~~~名~~~称~~ & \underline{~~~~学院~~~~} \\[.4ex]
+            专~~~业~~~名~~~称~~ & \underline{~~~~专业~~~~} \\[.4ex]
+            学~~~生~~~姓~~~名~~ & \underline{~~~李俊然~~~} \\[.4ex]
+            指~~~导~~~教~~~师~~ & \underline{~~~123~~~~~}  \\
+        \end{tabular}
+
         }
         \vskip 60bp
         \centerline{\heiti\zihao{-3}2021~~年~~5~~月~~23~~日}
     \end{center}
 \end{titlepage}
-
 \pagenumbering{gobble}
+\newpage
+\tableofcontents
+
+
 \newpage
 \pagenumbering{arabic}
 \section{绪论}
 \subsection{问题描述}
-在现代，对于气象数据的预测对于某些商业活动非常重要
+在现代，对于气象数据的预测对于某些商业活动非常重要，如何根据过去的气象数据对于未来的天气条件进行预测是一个值得研
+究的问题
 \subsection{数据来源}
 数据来自于Kaggle，源自Weather Undergroud API。数据包含了2013年1月1日到2017年4月24日德里(Delhi)的每日平均气温、
 湿度、风速、气压数据，本模型利用了温度进行时间序列分析。
 \section{数据描述}
-这是第二章
+以下是训练数据的前几行
+
+\begin{table}[htbp]
+    \centering    
+    \begin{tabular}{rrrrr}
+        \multicolumn{1}{l}{date} & \multicolumn{1}{l}{meantemp} & \multicolumn{1}{l}{humidity} & \multicolumn{1}{l}{wind\_speed} & \multicolumn{1}{l}{meanpressure} \\
+        \midrule
+        2013/1/1                 & 10.00                        & 84.50                        & 0.00                            & 1015.67                          \\
+        2013/1/2                 & 7.40                         & 92.00                        & 2.98                            & 1017.80                          \\
+        2013/1/3                 & 7.17                         & 87.00                        & 4.63                            & 1018.67                          \\
+        2013/1/4                 & 8.67                         & 71.33                        & 1.23                            & 1017.17                          \\
+        2013/1/5                 & 6.00                         & 86.83                        & 3.70                            & 1016.50                          \\
+        2013/1/6                 & 7.00                         & 82.80                        & 1.48                            & 1018.00                          \\
+        2013/1/7                 & 7.00                         & 78.60                        & 6.30                            & 1020.00                          \\
+        2013/1/8                 & 8.86                         & 63.71                        & 7.14                            & 1018.71                          \\
+        2013/1/9                 & 14.00                        & 51.25                        & 12.50                           & 1017.00                          \\
+        2013/1/10                & 11.00                        & 62.00                        & 7.40                            & 1015.67                          \\
+        \bottomrule
+    \end{tabular}%
+    \label{tab:addlabel}%
+    \caption{部分训练数据}
+\end{table}%
+
+建立模型只使用了每日平均温度数据，均值为25.51$^{\circ}$C，标准差为7.339416$^{\circ}$C，
+其随时间变化的图形如下。
+
+\begin{figure}[H]
+    \centering % 图片居中
+    \includegraphics[width = 8.3cm]{figure/01.eps}
+    \caption{气温时间序列图}
+    \label{fig:figure1label}
+\end{figure}
+
+可以看到其呈现强烈的季节性趋势。
+
 \section{模型构建}
-21
+考虑到平均气温存在季节性趋势，我们建立模型
+$$X_t=(T_t-T_{t-1})-(T_{t-365}-T_{t-366})$$
+其中$T_t$是第t期气温，$X_t$为进行了差分之后的新变量
+
 \section{模型预测检验}
 21
 \end{document}
