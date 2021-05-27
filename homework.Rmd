@@ -81,7 +81,7 @@ summary(ans_garch)
 ```
 
 ```{r}
-ans_garch=garchFit(~arma(1, 1)+garch(5,0),data=x)
+ans_garch=garchFit(~arma(1, 1)+garch(1,0),data=x)
 summary(ans_garch)
 ```
 ```{r}
@@ -91,6 +91,8 @@ plot(density(e))
 ```
 ```{r}
 Box.test(e^2,lag = 1,type = "Ljung-Box")
+acf(e^2)
+pacf(e^2)
 ```
 
 ```{r}
@@ -142,6 +144,18 @@ plot(real_tem)
 ```
 ```{r}
 xx=merge(pred_tem,pred_tem_low,pred_tem_up,real_tem)
-plot(xx)
+pred=xx
+plot(pred,col=c("blue","grey","grey","red"))
+```
+```{r}
+library(data.table)
+library(ggplot2)
+xxx=data.table(xx)
+xxxx=cbind(x=1:114,xxx)
+df=melt(xxxx,id="x")
+p=ggplot(df,aes(x=x,y=value,group=variable,color=variable))+
+  geom_line()
+p
+
 ```
 
