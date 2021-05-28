@@ -312,13 +312,14 @@ $$\sigma_t^2=3.92651417+0.14566838a_{t-1}^2$$
     \caption{预测效果}
 \end{figure}
 
-图中红色为实际的每日平均气温，蓝色为预测的均值，灰色曲线为上下界。可以看到前几天的预测效果较好，
-但是之后就出现了较大的偏差。说明长期预测温度的准确性不高，这一点也符合实际。
+图中红色为实际的每日平均气温，蓝色为预测的均值，灰色曲线为上下界（只考虑了$X_t$当日的波动，未考虑累计效应）。
+可以看到前几天的预测效果较好，但是之后就出现了较大的偏差。说明长期预测温度的准确性不高，这一点也符合实际。
 
 \appendix
 \section{附录}
 本文数据以及代码在https://github.com/tassadar667/TSA-Homework，部分R代码如下（如要运行请访问github
 获取完整代码）
+
 \begin{lstlisting}[language=R]
 ans_garch=garchFit(~arma(1, 2)+garch(5,0),data=x)
 summary(ans_garch)
