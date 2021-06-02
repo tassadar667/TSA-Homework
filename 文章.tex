@@ -47,6 +47,7 @@
 \usepackage{float} %设置图片浮动位置的宏包
 \usepackage{subfigure} %插入多图时用子图显示的宏包
 \usepackage[hidelinks]{hyperref}
+\usepackage{abstract}
 
 \begin{document}
 \begin{titlepage}
@@ -88,6 +89,14 @@
 \end{titlepage}
 \pagenumbering{gobble}
 \newpage
+
+\renewcommand{\abstractname}{摘要}
+\begin{onecolabstract}
+    ...... 
+\end{onecolabstract}
+
+\newpage
+
 \tableofcontents
 
 
