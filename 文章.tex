@@ -65,26 +65,23 @@
         ~~\\
         \vspace*{\stretch{4}}
         \begin{minipage}[h]{.8\textwidth}
-            \centering{\heiti\zihao{2}时间序列分析课程论文}
+            \centering{\heiti\zihao{2}对于德里每日平均气温的时间序列分析}
         \end{minipage}
         \vskip 20bp
-        \begin{minipage}[h]{.75\textwidth}
-            \centering{\heiti\zihao{3}时间序列分析课程论文}
-        \end{minipage}
         \vspace*{\stretch{3}}
         ~~\\
         {
         \zihao{-3}\heiti
         \begin{tabular}{cc}
-            学~~~院~~~名~~~称~~ & \underline{~~~~学院~~~~} \\[.4ex]
-            专~~~业~~~名~~~称~~ & \underline{~~~~专业~~~~} \\[.4ex]
-            学~~~生~~~姓~~~名~~ & \underline{~~~李俊然~~~} \\[.4ex]
-            指~~~导~~~教~~~师~~ & \underline{~~~123~~~~~}  \\
+            学~~~院~~~名~~~称~~ & \underline{~~~~经济管理学院~~~~} \\[.4ex]
+            专~~~业~~~名~~~称~~ & \underline{~~~~~~~统计~~~~~~~~} \\[.4ex]
+            学~~~生~~~姓~~~名~~ & \underline{~~~~~~李俊然~~~~~~~} \\[.4ex]
+            ~~~~~学~~~号~~~~~~~ & \underline{~~~~~18377198~~~~~}  \\
         \end{tabular}
 
         }
         \vskip 60bp
-        \centerline{\heiti\zihao{-3}2021~~年~~5~~月~~23~~日}
+        \centerline{\heiti\zihao{-3}2021~~年~~6~~月~~12~~日}
     \end{center}
 \end{titlepage}
 \pagenumbering{gobble}
@@ -92,7 +89,10 @@
 
 \renewcommand{\abstractname}{摘要}
 \begin{onecolabstract}
-    ...... 
+对于德里的每日平均气温进行了描述性分析，首先对于数据进行了差分处理，消除了季节性影响因素
+，建立了ARAM模型，之后发现残差没有通过步幅为5的Ljung-BoxTest，于是考虑建立ARAM+Arch模型并根据
+显著性水平对于模型进行了一定简化，最后使用模型进行了预测。
+
 \end{onecolabstract}
 
 \newpage
