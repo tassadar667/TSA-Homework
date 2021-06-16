@@ -85,15 +85,7 @@
     \end{center}
 \end{titlepage}
 \pagenumbering{gobble}
-\newpage
 
-\renewcommand{\abstractname}{摘要}
-\begin{onecolabstract}
-对于德里的每日平均气温进行了描述性分析，首先对于数据进行了差分处理，消除了季节性影响因素
-，建立了ARAM模型，之后发现残差没有通过步幅为5的Ljung-BoxTest，于是考虑建立ARAM+Arch模型并根据
-显著性水平对于模型进行了一定简化，最后使用模型进行了预测。
-
-\end{onecolabstract}
 
 \newpage
 
@@ -326,45 +318,6 @@ $$\sigma_t^2=3.92651417+0.14566838a_{t-1}^2$$
 
 \appendix
 \section{附录}
-本文数据以及代码在https://github.com/tassadar667/TSA-Homework，部分R代码如下（如要运行请访问github
-获取完整代码）
-
-\begin{lstlisting}[language=R]
-ans_garch=garchFit(~arma(1, 2)+garch(5,0),data=x)
-summary(ans_garch)
-ans_garch=garchFit(~arma(1, 1)+garch(5,0),data=x)
-summary(ans_garch)
-e=residuals(ans_garch)
-plot(density(e))
-pred_x=predict(ans_garch,114)
-pred_tem=as.numeric(tem)
-n=length(tem)+1
-for (i in n:(n+113)) {
-pred_tem=c(pred_tem,pred_x$meanForecast[i-n+1]
-            +pred_tem[i-1]+pred_tem[i-365]
-            -pred_tem[i-366])
-}
-pred_tem_up=as.numeric(tem)
-
-for (i in n:(n+113)) {
-pred_tem_up=c(pred_tem_up,pred_x$meanForecast[i-n+1]+3*pred_x$standardDeviation[i-n+1]
-                +pred_tem[i-1]+pred_tem[i-365]
-                -pred_tem[i-366])
-}
-pred_tem_low=as.numeric(tem)
-
-for (i in n:(n+113)) {
-pred_tem_low=c(pred_tem_low,pred_x$meanForecast[i-n+1]-3*pred_x$standardDeviation[i-n+1]
-                +pred_tem[i-1]+pred_tem[i-365]
-                -pred_tem[i-366])
-}
-
-dates=seq(as.Date("2013-01-01"), length = length(pred_tem), by = "days")
-
-pred_tem=xts(pred_tem,dates)[n:(n+113)]
-pred_tem_up=xts(pred_tem_up,dates)[n:(n+113)]
-pred_tem_low=xts(pred_tem_low,dates)[n:(n+113)]
-plot(pred_tem)
-\end{lstlisting} 
+本文数据以及代码在https://github.com/tassadar667/TSA-Homework。
     
 \end{document}
